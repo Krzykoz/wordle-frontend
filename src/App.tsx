@@ -2,7 +2,10 @@ import { useState } from "react";
 import "./App.css";
 import { Container } from "./components/container/Container";
 import { Navbar } from "./components/navbar/Navbar";
-import { ModalStats } from "./components/modal/ModalStats";
+
+import { StatsModal } from "./components/modal/statsModal/StatsModal";
+import { SettingsModal } from "./components/modal/settingsModal/SettingsModal";
+import { RankingModal } from "./components/modal/rankingModal/RankingModal";
 import { Keyboard } from "./components/keyboard/Keyboard";
 
 function App() {
@@ -43,7 +46,9 @@ function App() {
         setIsStatsModalOpen={setIsStatsModalOpen}
         setIsSettingsModalOpen={setIsSettingsModalOpen}
       />
-      <ModalStats />
+      {isStatsModalOpen && <StatsModal closeModal={setIsStatsModalOpen} />}
+      {isSettingsModalOpen && <SettingsModal closeModal={setIsSettingsModalOpen} />}
+      {isRankingModalOpen && <RankingModal closeModal={setIsRankingModalOpen} />}
       <div className="game">
         <p>enteredWord: {enteredWord}</p>
         <Keyboard onEnter={onEnter} onChar={onChar} onDelete={onDelete} />

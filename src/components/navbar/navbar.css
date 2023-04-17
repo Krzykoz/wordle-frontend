@@ -1,6 +1,7 @@
 .navbar {
   height: 15%;
   margin: 0;
+  padding: 0;
   justify-content: space-between;
 }
 
@@ -9,24 +10,18 @@
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
-  gap: 12rem;
-}
-
-#center {
-  margin-left: 7em;
+  gap: 30rem;
+  padding: 0 10px 0 10px;
+  border: solid 1px #000;
 }
 
 .side-menu {
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   align-items: center;
-  gap: 0.6rem
+  gap: .6rem;
 }
 
-.side-menu button svg {
+.side-menu svg {
   width: 1.3em;
-}
-
-.smaller-button {
-  padding: .4em .8em;
 }
