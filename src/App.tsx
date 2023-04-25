@@ -7,34 +7,43 @@ import { StatsModal } from "./components/modal/statsModal/StatsModal";
 import { SettingsModal } from "./components/modal/settingsModal/SettingsModal";
 import { RankingModal } from "./components/modal/rankingModal/RankingModal";
 import { Keyboard } from "./components/keyboard/Keyboard";
+import { Grid } from "./components/grid/Grid";
 
 function App() {
   const [isRankingModalOpen, setIsRankingModalOpen] = useState(false);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [enteredWord, setEnteredWord] = useState("");
-  const [guessingWord, setGuessingWord] = useState("asdfg");
+  const [guessingWord, setGuessingWord] = useState("DEBIL");
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
+  const [guesses, setGuesses] = useState<string[]>([]);
 
   const onChar = (value: string) => {
+    if (gameWon || gameLost) {
+      return;
+    }
     if (enteredWord.length < 5) {
       setEnteredWord((prevState) => `${prevState}${value}`);
     }
   };
 
   const onDelete = () => {
-    console.log({ enteredWord });
     setEnteredWord((prevState) => prevState.slice(0, -1));
   };
 
   const onEnter = () => {
+    if (enteredWord.length !== 5) {
+      return;
+    }
     if (enteredWord === guessingWord) {
-      console.log("correct");
+      setGuesses((current) => [...current, enteredWord]);
       setGameWon(true);
     } else {
-      console.log("incorrect");
-      setGameLost(true);
+      setGuesses((current) => [...current, enteredWord]);
+      if (guesses.length === 4) {
+        setGameLost(true);
+      }
     }
     setEnteredWord("");
   };
@@ -47,11 +56,25 @@ function App() {
         setIsSettingsModalOpen={setIsSettingsModalOpen}
       />
       {isStatsModalOpen && <StatsModal closeModal={setIsStatsModalOpen} />}
-      {isSettingsModalOpen && <SettingsModal closeModal={setIsSettingsModalOpen} />}
-      {isRankingModalOpen && <RankingModal closeModal={setIsRankingModalOpen} />}
+      {isSettingsModalOpen && (
+        <SettingsModal closeModal={setIsSettingsModalOpen} />
+      )}
+      {isRankingModalOpen && (
+        <RankingModal closeModal={setIsRankingModalOpen} />
+      )}
       <div className="game">
-        <p>enteredWord: {enteredWord}</p>
-        <Keyboard onEnter={onEnter} onChar={onChar} onDelete={onDelete} />
+        <Grid
+          guesses={guesses}
+          enteredWord={enteredWord}
+          guessingWord={guessingWord}
+        />
+        <Keyboard
+          onEnter={onEnter}
+          onChar={onChar}
+          onDelete={onDelete}
+          solution={guessingWord}
+          guesses={guesses}
+        />
       </div>
     </Container>
   );

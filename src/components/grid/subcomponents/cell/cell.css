@@ -1,0 +1,25 @@
+.cell {
+  width: 70px;
+  height: 70px;
+  border: 3px solid #1a1a1a;
+  border-radius: 10px;
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell-letter {
+  font-size: 2em;
+  font-weight: 1200;
+  text-shadow: 2px 2px 2px black;
+  color: white;
+}
+
+.correct-letter {
+  background-color: green;
+}
+
+.present-letter {
+  background-color: rgb(192, 192, 24);
+}

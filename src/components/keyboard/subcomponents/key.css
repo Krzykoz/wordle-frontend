@@ -1,3 +1,15 @@
 .key {
-  margin: 1px;
+  margin: 2px;
+}
+
+.correct-letter {
+  background-color: green;
+}
+
+.present-letter {
+  background-color: rgb(192, 192, 24);
+}
+
+.absent-letter {
+  background-color: grey;
 }
