@@ -16,7 +16,7 @@ function App() {
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [enteredWord, setEnteredWord] = useState("");
-  const [guessingWord, setGuessingWord] = useState("DEBIL");
+  const [guessingWord, setGuessingWord] = useState("POLSL");
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
@@ -52,7 +52,12 @@ function App() {
     setRoundNumber((prevState) => prevState + 1);
   };
 
-  const playAgainHandler = () => {};
+  const playAgainHandler = () => {
+    setGameWon(false);
+    setGameLost(false);
+    setGuesses([]);
+    setRoundNumber(0);
+  };
 
   return (
     <Container>
