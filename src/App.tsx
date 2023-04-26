@@ -6,6 +6,8 @@ import { Navbar } from "./components/navbar/Navbar";
 import { StatsModal } from "./components/modal/statsModal/StatsModal";
 import { SettingsModal } from "./components/modal/settingsModal/SettingsModal";
 import { RankingModal } from "./components/modal/rankingModal/RankingModal";
+import { WonModal } from "./components/modal/wonModal/wonModal";
+import { LostModal } from "./components/modal/lostModal/lostModal";
 import { Keyboard } from "./components/keyboard/Keyboard";
 import { Grid } from "./components/grid/Grid";
 
@@ -18,6 +20,7 @@ function App() {
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
+  const [roundNumber, setRoundNumber] = useState(0);
 
   const onChar = (value: string) => {
     if (gameWon || gameLost) {
@@ -46,6 +49,7 @@ function App() {
       }
     }
     setEnteredWord("");
+    setRoundNumber((prevState) => prevState + 1);
   };
 
   return (
@@ -62,6 +66,10 @@ function App() {
       {isRankingModalOpen && (
         <RankingModal closeModal={setIsRankingModalOpen} />
       )}
+      {gameWon && (
+        <WonModal closeModal={setGameWon} roundNumber={roundNumber} />
+      )}
+      {gameLost && <LostModal closeModal={setGameLost} word={guessingWord} />}
       <div className="game">
         <Grid
           guesses={guesses}
