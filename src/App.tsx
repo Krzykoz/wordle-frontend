@@ -52,6 +52,8 @@ function App() {
     setRoundNumber((prevState) => prevState + 1);
   };
 
+  const playAgainHandler = () => {};
+
   return (
     <Container>
       <Navbar
@@ -67,9 +69,19 @@ function App() {
         <RankingModal closeModal={setIsRankingModalOpen} />
       )}
       {gameWon && (
-        <WonModal closeModal={setGameWon} roundNumber={roundNumber} />
+        <WonModal
+          closeModal={setGameWon}
+          playAgain={playAgainHandler}
+          roundNumber={roundNumber}
+        />
       )}
-      {gameLost && <LostModal closeModal={setGameLost} word={guessingWord} />}
+      {gameLost && (
+        <LostModal
+          closeModal={setGameLost}
+          playAgain={playAgainHandler}
+          word={guessingWord}
+        />
+      )}
       <div className="game">
         <Grid
           guesses={guesses}

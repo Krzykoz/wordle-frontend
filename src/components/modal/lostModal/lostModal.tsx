@@ -3,9 +3,11 @@ import "./lostModal.css"
 
 export const LostModal = ({
   closeModal,
+  playAgain,
   word,
 }: {
   closeModal: (value: boolean) => void;
+  playAgain: (value: boolean) => void;
   word: string;
 }) => {
   return (
@@ -24,6 +26,7 @@ export const LostModal = ({
         </div>
         <div className="footer">
           <button id="closeBtn" onClick={() => closeModal(false)}>Close</button>
+          <button id="playAgainBtn" onClick={() => playAgain(true)}>Play Again</button>
         </div>
       </div>
     </div>

@@ -3,9 +3,11 @@ import "../Modal.css";
 
 export const WonModal = ({
   closeModal,
+  playAgain,
   roundNumber,
 }: {
   closeModal: (value: boolean) => void;
+  playAgain: (value: boolean) => void;
   roundNumber: number;
 }) => {
   let round = "rounds";
@@ -29,6 +31,7 @@ export const WonModal = ({
           <button id="closeBtn" onClick={() => closeModal(false)}>
             Close
           </button>
+          <button id="playAgainBtn" onClick={() => playAgain(true)}>Play Again</button>
         </div>
       </div>
     </div>

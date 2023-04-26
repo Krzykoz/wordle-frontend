@@ -70,3 +70,8 @@
 #closeBtn {
   background-color: crimson;
 }
+
+#playAgainBtn {
+  background-color: rgb(19, 172, 19);
+  margin-left: 20px;
+}
