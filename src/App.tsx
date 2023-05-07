@@ -1,26 +1,45 @@
-import { useState } from "react";
-import "./App.css";
-import { Container } from "./components/container/Container";
-import { Navbar } from "./components/navbar/Navbar";
+import { useEffect, useState } from 'react';
+import './App.css';
+import { Container } from './components/container/Container';
+import { Navbar } from './components/navbar/Navbar';
 
-import { StatsModal } from "./components/modal/statsModal/StatsModal";
-import { SettingsModal } from "./components/modal/settingsModal/SettingsModal";
-import { RankingModal } from "./components/modal/rankingModal/RankingModal";
-import { WonModal } from "./components/modal/wonModal/wonModal";
-import { LostModal } from "./components/modal/lostModal/lostModal";
-import { Keyboard } from "./components/keyboard/Keyboard";
-import { Grid } from "./components/grid/Grid";
+import { StatsModal } from './components/modal/statsModal/StatsModal';
+import { SettingsModal } from './components/modal/settingsModal/SettingsModal';
+import { RankingModal } from './components/modal/rankingModal/RankingModal';
+import { WonModal } from './components/modal/wonModal/wonModal';
+import { LostModal } from './components/modal/lostModal/lostModal';
+import { Keyboard } from './components/keyboard/Keyboard';
+import { Grid } from './components/grid/Grid';
 
 function App() {
   const [isRankingModalOpen, setIsRankingModalOpen] = useState(false);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-  const [enteredWord, setEnteredWord] = useState("");
-  const [guessingWord, setGuessingWord] = useState("POLSL");
+  const [enteredWord, setEnteredWord] = useState('');
+  const [guessingWord, setGuessingWord] = useState('POLSL');
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [roundNumber, setRoundNumber] = useState(0);
+
+  const fetchWord = async () => {
+    const response = await fetch(
+      'http://localhost:8080/api/v1/word/random?languageCode=PL'
+    );
+    const data = await response.json();
+    console.log({ data });
+    setGuessingWord(data);
+  };
+
+  const fetchDogPhotoApi = async () => {
+    const response = await fetch('https://dog.ceo/api/breeds/image/random');
+    const data = await response.json();
+    console.log({ data });
+  };
+
+  useEffect(() => {
+    fetchWord();
+  }, []);
 
   const onChar = (value: string) => {
     if (gameWon || gameLost) {
@@ -48,7 +67,7 @@ function App() {
         setGameLost(true);
       }
     }
-    setEnteredWord("");
+    setEnteredWord('');
     setRoundNumber((prevState) => prevState + 1);
   };
 
@@ -61,6 +80,7 @@ function App() {
 
   return (
     <Container>
+      <p onClick={fetchDogPhotoApi}>asdasdasd</p>
       <Navbar
         setIsRankingModalOpen={setIsRankingModalOpen}
         setIsStatsModalOpen={setIsStatsModalOpen}
@@ -87,7 +107,7 @@ function App() {
           word={guessingWord}
         />
       )}
-      <div className="game">
+      <div className='game'>
         <Grid
           guesses={guesses}
           enteredWord={enteredWord}
