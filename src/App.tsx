@@ -16,7 +16,7 @@ function App() {
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [enteredWord, setEnteredWord] = useState('');
-  const [guessingWord, setGuessingWord] = useState('POLSL');
+  const [guessingWord, setGuessingWord] = useState('');
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
@@ -27,14 +27,7 @@ function App() {
       'http://localhost:8080/api/v1/word/random?languageCode=PL'
     );
     const data = await response.json();
-    console.log({ data });
-    setGuessingWord(data);
-  };
-
-  const fetchDogPhotoApi = async () => {
-    const response = await fetch('https://dog.ceo/api/breeds/image/random');
-    const data = await response.json();
-    console.log({ data });
+    setGuessingWord(data.word.toUpperCase());
   };
 
   useEffect(() => {
@@ -80,7 +73,6 @@ function App() {
 
   return (
     <Container>
-      <p onClick={fetchDogPhotoApi}>asdasdasd</p>
       <Navbar
         setIsRankingModalOpen={setIsRankingModalOpen}
         setIsStatsModalOpen={setIsStatsModalOpen}
