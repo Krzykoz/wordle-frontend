@@ -56,16 +56,49 @@ function App() {
     setEnteredWord((prevState) => prevState.slice(0, -1));
   };
 
-  const onEnter = () => {
+  const onEnter = async () => {
     if (enteredWord.length !== 5) {
       return;
     }
     if (enteredWord === guessingWord) {
       setGuesses((current) => [...current, enteredWord]);
+
+      const response = await fetch('http://localhost:8080/api/v1/game', {
+        method: 'POST',
+        body: JSON.stringify({
+          turns: roundNumber + 1,
+          guessed: true,
+          word: guessingWord.toLowerCase(),
+          languageCode: 'PL',
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      if (!response.ok) {
+        console.log('Something went wrong!');
+      }
       setGameWon(true);
     } else {
       setGuesses((current) => [...current, enteredWord]);
       if (guesses.length === 4) {
+        const response = await fetch('http://localhost:8080/api/v1/game', {
+          method: 'POST',
+          body: JSON.stringify({
+            turns: roundNumber + 1,
+            guessed: false,
+            word: guessingWord.toLowerCase(),
+            languageCode: 'PL',
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+        if (!response.ok) {
+          console.log('Something went wrong!');
+        }
         setGameLost(true);
       }
     }
