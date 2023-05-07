@@ -62,13 +62,13 @@ function App() {
     }
     if (enteredWord === guessingWord) {
       setGuesses((current) => [...current, enteredWord]);
-      console.log({ userToken }, { roundNumber }, { guessingWord });
+
       const response = await fetch('http://localhost:8080/api/v1/game', {
         method: 'POST',
         body: JSON.stringify({
           turns: roundNumber + 1,
           guessed: true,
-          word: guessingWord,
+          word: guessingWord.toLowerCase(),
           languageCode: 'PL',
         }),
         headers: {
