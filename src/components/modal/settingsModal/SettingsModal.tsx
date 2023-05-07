@@ -10,6 +10,8 @@ export const SettingsModal = ({
   setUserToken: Dispatch<SetStateAction<string | null>>;
   userToken: string | null;
 }) => {
+  const [error, setError] = React.useState<string | null>(null);
+
   const handleLogin = async (event: any) => {
     event.preventDefault();
     const token = event.target[0].value;
@@ -19,9 +21,18 @@ export const SettingsModal = ({
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log({ response });
+    if (!response.ok) {
+      setError('Invalid token');
+      return;
+    }
     localStorage.setItem('userToken', token);
     setUserToken(token);
+    closeModal(false);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('userToken');
+    setUserToken(null);
     closeModal(false);
   };
 
@@ -43,7 +54,10 @@ export const SettingsModal = ({
           <h1>Settings</h1>
         </div>
         {userToken ? (
-          <div className='body'>You are logged in</div>
+          <>
+            <div className='body'>You are logged in</div>
+            <button onClick={logout}>Logout</button>
+          </>
         ) : (
           <>
             <p>Login</p>
@@ -54,11 +68,12 @@ export const SettingsModal = ({
 
             <p>Register</p>
             <form onSubmit={handleRegister}>
-              <input type='text' placeholder='email' />
+              <input type='text' placeholder='Email' />
               <input type='text' placeholder='First Name' />
               <input type='text' placeholder='Last Name' />
               <input type='submit' value='Register' />
             </form>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
           </>
         )}
         <div className='footer'>
