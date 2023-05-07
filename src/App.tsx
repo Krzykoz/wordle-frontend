@@ -31,8 +31,8 @@ function App() {
     setGuessingWord(data.word.toUpperCase());
   };
 
-  const checkIfUserInfoExists = async () => {
-    const localStorageUserToken = await localStorage.getItem('userToken');
+  const checkIfUserInfoExists = () => {
+    const localStorageUserToken = localStorage.getItem('userToken');
     if (localStorageUserToken) {
       setUserToken(localStorageUserToken);
     }
@@ -92,6 +92,7 @@ function App() {
         <SettingsModal
           closeModal={setIsSettingsModalOpen}
           userToken={userToken}
+          setUserToken={setUserToken}
         />
       )}
       {isRankingModalOpen && (
