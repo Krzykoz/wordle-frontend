@@ -77,7 +77,6 @@ function App() {
             Authorization: `Bearer ${userToken}`,
           },
         });
-        console.log({ response });
         if (!response.ok) {
           console.log('Something went wrong!');
         }
@@ -101,7 +100,6 @@ function App() {
               Authorization: `Bearer ${userToken}`,
             },
           });
-          console.log({ response });
           if (!response.ok) {
             console.log('Something went wrong!');
           }
