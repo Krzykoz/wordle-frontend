@@ -11,7 +11,6 @@ export const SettingsModal = ({
   userToken: string | null;
 }) => {
   const [error, setError] = React.useState<string | null>(null);
-  const [createdToken, setCreatedToken] = React.useState<string | null>(null);
 
   const handleLogin = async (event: any) => {
     event.preventDefault();
@@ -57,7 +56,6 @@ export const SettingsModal = ({
 
     const data = await response.json();
     const { token } = data;
-    setCreatedToken(token);
     localStorage.setItem('userToken', token);
     setUserToken(token);
   };
@@ -74,10 +72,10 @@ export const SettingsModal = ({
         {userToken ? (
           <>
             <div className='body'>You are logged in</div>
-            {createdToken && (
+            {userToken && (
               <>
                 <p>Here is your token:</p>
-                <p style={{ wordBreak: 'break-all' }}>{createdToken}</p>
+                <p style={{ wordBreak: 'break-all' }}>{userToken}</p>
               </>
             )}
             <button onClick={logout}>Logout</button>

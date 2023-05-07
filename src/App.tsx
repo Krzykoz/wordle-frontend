@@ -56,12 +56,30 @@ function App() {
     setEnteredWord((prevState) => prevState.slice(0, -1));
   };
 
-  const onEnter = () => {
+  const onEnter = async () => {
     if (enteredWord.length !== 5) {
       return;
     }
     if (enteredWord === guessingWord) {
       setGuesses((current) => [...current, enteredWord]);
+      console.log({ userToken }, { roundNumber }, { guessingWord });
+      const response = await fetch('http://localhost:8080/api/v1/game', {
+        method: 'POST',
+        body: JSON.stringify({
+          turns: roundNumber + 1,
+          guessed: true,
+          word: guessingWord,
+          languageCode: 'PL',
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      console.log({ response });
+      if (!response.ok) {
+        console.log('Something went wrong!');
+      }
       setGameWon(true);
     } else {
       setGuesses((current) => [...current, enteredWord]);
