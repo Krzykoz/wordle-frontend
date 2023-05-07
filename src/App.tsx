@@ -21,6 +21,7 @@ function App() {
   const [gameLost, setGameLost] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [roundNumber, setRoundNumber] = useState(0);
+  const [userToken, setUserToken] = useState<string | null>(null);
 
   const fetchWord = async () => {
     const response = await fetch(
@@ -30,8 +31,16 @@ function App() {
     setGuessingWord(data.word.toUpperCase());
   };
 
+  const checkIfUserInfoExists = async () => {
+    const localStorageUserToken = await localStorage.getItem('userToken');
+    if (localStorageUserToken) {
+      setUserToken(localStorageUserToken);
+    }
+  };
+
   useEffect(() => {
     fetchWord();
+    checkIfUserInfoExists();
   }, []);
 
   const onChar = (value: string) => {
@@ -80,7 +89,10 @@ function App() {
       />
       {isStatsModalOpen && <StatsModal closeModal={setIsStatsModalOpen} />}
       {isSettingsModalOpen && (
-        <SettingsModal closeModal={setIsSettingsModalOpen} />
+        <SettingsModal
+          closeModal={setIsSettingsModalOpen}
+          userToken={userToken}
+        />
       )}
       {isRankingModalOpen && (
         <RankingModal closeModal={setIsRankingModalOpen} />
