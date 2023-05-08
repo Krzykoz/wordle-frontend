@@ -141,6 +141,8 @@ function App() {
           closeModal={setGameWon}
           playAgain={playAgainHandler}
           roundNumber={roundNumber}
+          guessingWord={guessingWord}
+          userToken={userToken}
         />
       )}
       {gameLost && (
